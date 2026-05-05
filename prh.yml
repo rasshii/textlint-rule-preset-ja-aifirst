@@ -1,5 +1,22 @@
 version: 1
+
+# textlint-rule-preset-ja-aifirst の prh 辞書
+#
+# 設計方針:
+#   1. prh は文脈解析できない (純粋な regex 置換)。固有名詞と一般単語を区別できないため、
+#      誤表記パターン (大文字小文字違い・空白挿入・ハイフン違い) のみを `patterns` に書き、
+#      正しい表記 (`expected` と一致するもの) はマッチさせない。
+#   2. preset-jtf-style と重複しない: 「全角と半角の間スペース」「カタカナ語の長音」等は
+#      jtf-style 任せ。本辞書は固有名詞・専門用語の表記統一に集中する。
+#   3. 各ルールに最低 1 件の specs テストケースを付ける (specs 失敗で本ファイル全体が
+#      load 不可になる仕様)。
+#   4. word boundary `(?<![-\w])` / `(?![-\w])` で URL やハイフン語との誤マッチを回避
+#      (Node.js 18+ で動作)。
+
 rules:
+
+  # === Programming languages (legacy, kept for backward compat) ===
+
   - expected: ECMAScript $1
     patterns:
       - /ECMAScript([0-9]+)/i
@@ -7,6 +24,7 @@ rules:
     specs:
       - from: ECMASCRIPT5
         to: ECMAScript 5
+
   - expected: JavaScript
     patterns:
       - /javascript/i
@@ -18,6 +36,7 @@ rules:
         to: JavaScript
       - from: Java script
         to: JavaScript
+
   - expected: jQuery
     patterns:
       - /(?<![-\w])jquery(?![-\w])/i
@@ -28,15 +47,448 @@ rules:
         to: jQuery
       - from: jquery-ui
         to: jquery-ui
+
+  # === Japanese style ===
+
   - expected: かもしれない
     patterns:
       - かも知れない
     specs:
       - from: かも知れない
         to: かもしれない
-  - expected: ペーパーレス監査
+
+  # === AI Models ===
+
+  - expected: ChatGPT
     patterns:
-      - デジタル監査
+      - /Chat GPT/
+      - /(?<![-\w])(chatgpt|Chatgpt|chat-gpt|CHATGPT)(?![-\w])/
     specs:
-      - from: デジタル監査
-        to: ペーパーレス監査
+      - from: chatgpt
+        to: ChatGPT
+      - from: Chat GPT
+        to: ChatGPT
+      - from: chat-gpt
+        to: ChatGPT
+
+  - expected: GPT-4
+    patterns:
+      - /(?<![-\w])(GPT4|gpt-4|gpt4|GPT 4|Gpt-4)(?![-\w])/
+    specs:
+      - from: GPT4
+        to: GPT-4
+      - from: gpt-4
+        to: GPT-4
+
+  - expected: GPT-3.5
+    patterns:
+      - /(?<![-\w])(GPT3\.5|gpt-3\.5|gpt3\.5|GPT 3\.5)(?![-\w])/
+    specs:
+      - from: GPT3.5
+        to: GPT-3.5
+      - from: gpt-3.5
+        to: GPT-3.5
+
+  - expected: GPT-4o
+    patterns:
+      - /(?<![-\w])(GPT4o|gpt-4o|gpt4o|GPT 4o)(?![-\w])/
+    specs:
+      - from: GPT4o
+        to: GPT-4o
+      - from: gpt-4o
+        to: GPT-4o
+
+  - expected: Claude
+    patterns:
+      - /(?<![-\w])(claude|CLAUDE)(?![-\w])/
+    specs:
+      - from: claude
+        to: Claude
+      - from: CLAUDE
+        to: Claude
+
+  - expected: Gemini
+    patterns:
+      - /(?<![-\w])(gemini|GEMINI)(?![-\w])/
+    specs:
+      - from: gemini
+        to: Gemini
+
+  - expected: Copilot
+    patterns:
+      - /(?<![-\w])(copilot|Co-pilot|co-pilot|CoPilot|COPILOT)(?![-\w])/
+    specs:
+      - from: copilot
+        to: Copilot
+      - from: co-pilot
+        to: Copilot
+
+  - expected: DALL-E
+    patterns:
+      - /(?<![-\w])(DALLE|Dall-E|dalle|dall-e|DALL-e)(?![-\w])/
+    specs:
+      - from: dalle
+        to: DALL-E
+      - from: DALLE
+        to: DALL-E
+
+  - expected: Stable Diffusion
+    patterns:
+      - /(?<![-\w])(StableDiffusion|stable diffusion|stablediffusion|STABLE DIFFUSION)(?![-\w])/
+    specs:
+      - from: stable diffusion
+        to: Stable Diffusion
+      - from: StableDiffusion
+        to: Stable Diffusion
+
+  - expected: Midjourney
+    patterns:
+      - /(?<![-\w])(MidJourney|midjourney|mid journey|MIDJOURNEY)(?![-\w])/
+    specs:
+      - from: midjourney
+        to: Midjourney
+      - from: MidJourney
+        to: Midjourney
+
+  - expected: Mistral
+    patterns:
+      - /(?<![-\w])(mistral|MISTRAL)(?![-\w])/
+    specs:
+      - from: mistral
+        to: Mistral
+
+  # === AI Concepts / Terminology ===
+
+  - expected: LLM
+    patterns:
+      - /(?<![-\w])(llm|Llm)(?![-\w])/
+    specs:
+      - from: llm
+        to: LLM
+      - from: Llm
+        to: LLM
+
+  - expected: プロンプト
+    patterns:
+      - /(?<![-\w])prompt(?![-\w])/
+    specs:
+      - from: prompt
+        to: プロンプト
+
+  - expected: プロンプトエンジニアリング
+    patterns:
+      - /(?<![-\w])(prompt engineering|Prompt Engineering|prompt-engineering)(?![-\w])/
+    specs:
+      - from: prompt engineering
+        to: プロンプトエンジニアリング
+      - from: Prompt Engineering
+        to: プロンプトエンジニアリング
+
+  - expected: トークン
+    patterns:
+      - /(?<![-\w])(Tokens|tokens)(?![-\w])/
+    specs:
+      - from: tokens
+        to: トークン
+      - from: Tokens
+        to: トークン
+
+  - expected: エンベディング
+    patterns:
+      - /(?<![-\w])(embedding|Embedding)(?![-\w])/
+    specs:
+      - from: embedding
+        to: エンベディング
+
+  - expected: ベクトルデータベース
+    patterns:
+      - /(?<![-\w])(VectorDB|Vector DB|vector database|Vector Database)(?![-\w])/
+    specs:
+      - from: Vector DB
+        to: ベクトルデータベース
+      - from: vector database
+        to: ベクトルデータベース
+
+  - expected: RAG
+    patterns:
+      - /(?<![-\w])(rag|Rag)(?![-\w])/
+    specs:
+      - from: rag
+        to: RAG
+      - from: Rag
+        to: RAG
+
+  - expected: ファインチューニング
+    patterns:
+      - /fine-tuning/
+      - /Fine-tuning/
+      - /fine tuning/
+      - /ファインチューン/
+    specs:
+      - from: fine-tuning
+        to: ファインチューニング
+      - from: Fine-tuning
+        to: ファインチューニング
+      - from: fine tuning
+        to: ファインチューニング
+      - from: ファインチューン
+        to: ファインチューニング
+
+  - expected: MCP
+    patterns:
+      - /(?<![-\w])(mcp|Mcp)(?![-\w])/
+    specs:
+      - from: mcp
+        to: MCP
+      - from: Mcp
+        to: MCP
+
+  - expected: Model Context Protocol
+    patterns:
+      - /model context protocol/i
+    specs:
+      - from: model context protocol
+        to: Model Context Protocol
+      - from: MODEL CONTEXT PROTOCOL
+        to: Model Context Protocol
+
+  - expected: ハルシネーション
+    patterns:
+      - /Hallucination/
+      - /hallucination/
+    specs:
+      - from: hallucination
+        to: ハルシネーション
+      - from: Hallucination
+        to: ハルシネーション
+
+  - expected: RLHF
+    patterns:
+      - /(?<![-\w])(rlhf|Rlhf)(?![-\w])/
+    specs:
+      - from: rlhf
+        to: RLHF
+
+  - expected: Few-shot
+    patterns:
+      - /(?<![-\w])(few shot|few-shots|few shots|Few shot|FEW-SHOT)(?![-\w])/
+    specs:
+      - from: few shot
+        to: Few-shot
+      - from: few-shots
+        to: Few-shot
+
+  - expected: Zero-shot
+    patterns:
+      - /(?<![-\w])(zero shot|zero-shots|zero shots|Zero shot|ZERO-SHOT)(?![-\w])/
+    specs:
+      - from: zero shot
+        to: Zero-shot
+      - from: zero-shots
+        to: Zero-shot
+
+  - expected: Chain of Thought
+    patterns:
+      - /chain of thought/i
+      - /chain-of-thought/i
+    specs:
+      - from: chain of thought
+        to: Chain of Thought
+      - from: chain-of-thought
+        to: Chain of Thought
+
+  # === AI Companies / Platforms ===
+
+  - expected: OpenAI
+    patterns:
+      - /(?<![-\w])(open ai|Open AI|Openai|openai|OPENAI|OpenAi)(?![-\w])/
+    specs:
+      - from: openai
+        to: OpenAI
+      - from: Open AI
+        to: OpenAI
+      - from: open ai
+        to: OpenAI
+
+  - expected: Anthropic
+    patterns:
+      - /(?<![-\w])(anthropic|ANTHROPIC|Anthropics)(?![-\w])/
+    specs:
+      - from: anthropic
+        to: Anthropic
+      - from: Anthropics
+        to: Anthropic
+
+  - expected: DeepMind
+    patterns:
+      - /(?<![-\w])(deepmind|Deep Mind|deep mind|DEEPMIND|Deepmind)(?![-\w])/
+    specs:
+      - from: deepmind
+        to: DeepMind
+      - from: Deep Mind
+        to: DeepMind
+
+  - expected: Meta AI
+    patterns:
+      - /(?<![-\w])(meta ai|MetaAI|metaai|META AI)(?![-\w])/
+    specs:
+      - from: meta ai
+        to: Meta AI
+      - from: MetaAI
+        to: Meta AI
+
+  - expected: Hugging Face
+    patterns:
+      - /(?<![-\w])(HuggingFace|huggingface|hugging face|huggingFace|HUGGINGFACE)(?![-\w])/
+    specs:
+      - from: huggingface
+        to: Hugging Face
+      - from: HuggingFace
+        to: Hugging Face
+
+  - expected: LangChain
+    patterns:
+      - /(?<![-\w])(langchain|Langchain|Lang Chain|LANGCHAIN|lang chain)(?![-\w])/
+    specs:
+      - from: langchain
+        to: LangChain
+      - from: Langchain
+        to: LangChain
+
+  - expected: LangGraph
+    patterns:
+      - /(?<![-\w])(langgraph|Langgraph|Lang Graph|LANGGRAPH|lang graph)(?![-\w])/
+    specs:
+      - from: langgraph
+        to: LangGraph
+
+  - expected: LlamaIndex
+    patterns:
+      - /(?<![-\w])(llamaindex|Llamaindex|Llama Index|LLAMAINDEX|llama index)(?![-\w])/
+    specs:
+      - from: llamaindex
+        to: LlamaIndex
+      - from: Llama Index
+        to: LlamaIndex
+
+  # === Dev Tools ===
+
+  - expected: Markdown
+    patterns:
+      - /(?<![-\w])(markdown|MarkDown|mark down|MARKDOWN)(?![-\w])/
+    specs:
+      - from: markdown
+        to: Markdown
+      - from: MarkDown
+        to: Markdown
+
+  - expected: JSON
+    patterns:
+      - /(?<![-\w])(json|Json|JSon)(?![-\w])/
+    specs:
+      - from: json
+        to: JSON
+      - from: Json
+        to: JSON
+
+  - expected: JSONL
+    patterns:
+      - /(?<![-\w])(jsonl|Jsonl)(?![-\w])/
+    specs:
+      - from: jsonl
+        to: JSONL
+
+  - expected: YAML
+    patterns:
+      - /(?<![-\w])(yaml|Yaml|YML|yml)(?![-\w])/
+    specs:
+      - from: yaml
+        to: YAML
+      - from: yml
+        to: YAML
+
+  - expected: Docker
+    patterns:
+      - /(?<![-\w])(docker|DOCKER)(?![-\w])/
+    specs:
+      - from: docker
+        to: Docker
+
+  - expected: Kubernetes
+    patterns:
+      - /(?<![-\w])(kubernetes|KUBERNETES)(?![-\w])/
+    specs:
+      - from: kubernetes
+        to: Kubernetes
+
+  - expected: K8s
+    patterns:
+      - /(?<![-\w])(k8s|K8S)(?![-\w])/
+    specs:
+      - from: k8s
+        to: K8s
+      - from: K8S
+        to: K8s
+
+  - expected: CLI
+    patterns:
+      - /(?<![-\w])(cli|Cli)(?![-\w])/
+    specs:
+      - from: cli
+        to: CLI
+      - from: Cli
+        to: CLI
+
+  - expected: IDE
+    patterns:
+      - /(?<![-\w])(ide|Ide)(?![-\w])/
+    specs:
+      - from: ide
+        to: IDE
+
+  - expected: VS Code
+    patterns:
+      - /(?<![-\w])(VSCode|vs code|vscode|Vscode|vs-code|VS-Code|VSCODE)(?![-\w])/
+    specs:
+      - from: vscode
+        to: VS Code
+      - from: VSCode
+        to: VS Code
+
+  - expected: GitHub
+    patterns:
+      - /(?<![-\w])(Github|github|git hub|GITHUB)(?![-\w])/
+    specs:
+      - from: github
+        to: GitHub
+      - from: Github
+        to: GitHub
+
+  - expected: Node.js
+    patterns:
+      - /(?<![-\w])(NodeJS|nodejs|node js|Node js|NODEJS|node\.js)(?![-\w])/
+    specs:
+      - from: nodejs
+        to: Node.js
+      - from: NodeJS
+        to: Node.js
+      - from: node.js
+        to: Node.js
+
+  - expected: npm
+    patterns:
+      - /(?<![-\w])(NPM|Npm)(?![-\w])/
+    specs:
+      - from: NPM
+        to: npm
+      - from: Npm
+        to: npm
+
+  - expected: API
+    patterns:
+      - /(?<![-\w])(api|Api)(?![-\w])/
+    specs:
+      - from: api
+        to: API
+      - from: Api
+        to: API
