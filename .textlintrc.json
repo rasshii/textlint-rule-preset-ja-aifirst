@@ -1,7 +1,10 @@
 {
     "rules": {
+        "preset-jtf-style": {
+            "3.1.1.全角文字と半角文字の間": false,
+            "4.2.7.コロン(：)": false
+        },
         "no-dropping-the-ra": true,
-        "preset-jtf-style": true,
         "ja-hiragana-fukushi": true,
         "ja-hiragana-hojodoushi": true,
         "ja-hiragana-daimeishi": true,
@@ -11,7 +14,28 @@
         },
         "prh": {
             "rulePaths": ["./prh.yml"]
-        }
+        },
+        "no-mix-dearu-desumasu": {
+            "preferInHeader": "",
+            "preferInBody": "ですます",
+            "preferInList": "である",
+            "strict": false
+        },
+        "ja-no-redundant-expression": true,
+        "sentence-length": {
+            "max": 100
+        },
+        "max-ten": {
+            "max": 4
+        },
+        "no-doubled-joshi": {
+            "min_interval": 1,
+            "strict": false
+        },
+        "max-kanji-continuous-len": {
+            "max": 6
+        },
+        "no-mixed-zenkaku-and-hankaku-alphabet": true
     },
     "filters": {
         "comments": true
