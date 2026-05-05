@@ -1,21 +1,19 @@
-# textlint-rule-preset-rasshii
+# textlint-rule-preset-ja-aifirst
 
 [textlint](https://github.com/textlint/textlint) preset for AI-friendly Japanese writing.
 
-AI による grep 検索の精度を上げるため、固有名詞や専門用語の表記揺れを排除することを目的としたプリセット。 prh 辞書 + JTF スタイル + ja-hiragana 系ルールを 1 つのプリセットにまとめている。
-
-リポジトリ名は `original-text-lint` のままだが、 npm パッケージ名は textlint preset 規約に従い `textlint-rule-preset-rasshii`。
+AI による grep 検索の精度を上げるため、固有名詞や専門用語の表記揺れを排除することを目的とした preset。 prh 辞書 + JTF スタイル + ja-hiragana 系ルールを 1 つの preset にまとめている。
 
 ## インストール (利用側)
 
 ```sh
-npm install --save-dev textlint github:rasshii/original-text-lint
+npm install --save-dev textlint github:rasshii/textlint-rule-preset-ja-aifirst
 ```
 
 特定バージョンに固定したい場合:
 
 ```sh
-npm install --save-dev textlint github:rasshii/original-text-lint#v1.0.0
+npm install --save-dev textlint github:rasshii/textlint-rule-preset-ja-aifirst#v1.0.1
 ```
 
 ## 使い方 (`.textlintrc.json`)
@@ -25,7 +23,7 @@ npm install --save-dev textlint github:rasshii/original-text-lint#v1.0.0
 ```json
 {
   "rules": {
-    "preset-rasshii": true
+    "preset-ja-aifirst": true
   }
 }
 ```
@@ -35,7 +33,7 @@ npm install --save-dev textlint github:rasshii/original-text-lint#v1.0.0
 ```json
 {
   "rules": {
-    "preset-rasshii": {
+    "preset-ja-aifirst": {
       "no-dropping-the-ra": false
     }
   }
@@ -47,10 +45,10 @@ npm install --save-dev textlint github:rasshii/original-text-lint#v1.0.0
 ```json
 {
   "rules": {
-    "preset-rasshii": {
+    "preset-ja-aifirst": {
       "prh": {
         "rulePaths": [
-          "./node_modules/textlint-rule-preset-rasshii/prh.yml",
+          "./node_modules/textlint-rule-preset-ja-aifirst/prh.yml",
           "./project-prh.yml"
         ]
       }
@@ -71,7 +69,7 @@ npx textlint --fix "docs/**/*.md"   # 自動修正
 | ルール | 用途 |
 |---|---|
 | `prh` | 表記揺れ辞書 (`prh.yml`)。固有名詞の正規化 |
-| `preset-jtf-style` | JTF 日本語スタイルガイド準拠 |
+| `preset-jtf-style` | JTF 日本語スタイルガイド準拠 (spread でマージ) |
 | `no-dropping-the-ra` | ら抜き言葉検出 (例: 食べれる → 食べられる) |
 | `ja-hiragana-fukushi` | 副詞のひらがな化推奨 |
 | `ja-hiragana-hojodoushi` | 補助動詞のひらがな化推奨 |
@@ -101,8 +99,8 @@ rules:
 ## 開発 (このリポを直接編集する場合)
 
 ```sh
-git clone https://github.com/rasshii/original-text-lint.git
-cd original-text-lint
+git clone https://github.com/rasshii/textlint-rule-preset-ja-aifirst.git
+cd textlint-rule-preset-ja-aifirst
 npm install
 npm test               # test/sample.md で動作確認
 ```

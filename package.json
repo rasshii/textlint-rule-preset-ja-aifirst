@@ -1,6 +1,6 @@
 {
-  "name": "textlint-rule-preset-rasshii",
-  "version": "1.0.0",
+  "name": "textlint-rule-preset-ja-aifirst",
+  "version": "1.0.1",
   "description": "textlint preset for AI-friendly Japanese writing: prh dictionary + JTF style + ja-hiragana rules.",
   "main": "index.js",
   "files": [
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rasshii/original-text-lint.git"
+    "url": "git+https://github.com/rasshii/textlint-rule-preset-ja-aifirst.git"
   },
   "keywords": [
     "textlint",
@@ -29,9 +29,9 @@
   "author": "rasshii",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rasshii/original-text-lint/issues"
+    "url": "https://github.com/rasshii/textlint-rule-preset-ja-aifirst/issues"
   },
-  "homepage": "https://github.com/rasshii/original-text-lint#readme",
+  "homepage": "https://github.com/rasshii/textlint-rule-preset-ja-aifirst#readme",
   "peerDependencies": {
     "textlint": ">=13.0.0"
   },
