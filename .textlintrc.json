@@ -1,15 +1,16 @@
 {
     "rules": {
-        "textlint-rule-no-dropping-the-ra": true,
+        "no-dropping-the-ra": true,
         "preset-jtf-style": true,
         "ja-hiragana-fukushi": true,
         "ja-hiragana-hojodoushi": true,
+        "ja-hiragana-daimeishi": true,
         "ja-keishikimeishi": {
             "detection_hou_kata": false,
             "detection_ue": false
         },
-        "@proofdict/proofdict": {
-            "dictURL": "https://rasshii.github.io/proof-dictionary/"
+        "prh": {
+            "rulePaths": ["./prh.yml"]
         }
     },
     "filters": {

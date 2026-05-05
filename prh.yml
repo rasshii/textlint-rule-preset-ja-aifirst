@@ -1,0 +1,42 @@
+version: 1
+rules:
+  - expected: ECMAScript $1
+    patterns:
+      - /ECMAScript([0-9]+)/i
+      - /ECMA Script([0-9]+)/i
+    specs:
+      - from: ECMASCRIPT5
+        to: ECMAScript 5
+  - expected: JavaScript
+    patterns:
+      - /javascript/i
+      - /Java Script/i
+    specs:
+      - from: javascript
+        to: JavaScript
+      - from: java script
+        to: JavaScript
+      - from: Java script
+        to: JavaScript
+  - expected: jQuery
+    patterns:
+      - /(?<![-\w])jquery(?![-\w])/i
+    specs:
+      - from: Jquery
+        to: jQuery
+      - from: jquery
+        to: jQuery
+      - from: jquery-ui
+        to: jquery-ui
+  - expected: かもしれない
+    patterns:
+      - かも知れない
+    specs:
+      - from: かも知れない
+        to: かもしれない
+  - expected: ペーパーレス監査
+    patterns:
+      - デジタル監査
+    specs:
+      - from: デジタル監査
+        to: ペーパーレス監査
