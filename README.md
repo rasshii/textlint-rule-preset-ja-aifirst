@@ -1,16 +1,69 @@
-# original-text-lint
+# textlint-rule-preset-rasshii
 
-[textlint](https://github.com/textlint/textlint) で日本語文書の表記揺れ・スタイル違反をチェックする個人設定リポジトリ。
+[textlint](https://github.com/textlint/textlint) preset for AI-friendly Japanese writing.
 
-AI による grep 検索の精度を上げるため、固有名詞や専門用語の表記揺れを排除することを目的とする。
+AI による grep 検索の精度を上げるため、固有名詞や専門用語の表記揺れを排除することを目的としたプリセット。 prh 辞書 + JTF スタイル + ja-hiragana 系ルールを 1 つのプリセットにまとめている。
 
-## 使い方
+リポジトリ名は `original-text-lint` のままだが、 npm パッケージ名は textlint preset 規約に従い `textlint-rule-preset-rasshii`。
+
+## インストール (利用側)
 
 ```sh
-npm install
-npm run lint           # test/ 配下の Markdown をチェック
-npm run fix            # 自動修正できるルールは fix
-npx textlint <path>    # 任意ファイルをチェック
+npm install --save-dev textlint github:rasshii/original-text-lint
+```
+
+特定バージョンに固定したい場合:
+
+```sh
+npm install --save-dev textlint github:rasshii/original-text-lint#v1.0.0
+```
+
+## 使い方 (`.textlintrc.json`)
+
+最小設定 (preset を全部有効化):
+
+```json
+{
+  "rules": {
+    "preset-rasshii": true
+  }
+}
+```
+
+特定ルールを無効化:
+
+```json
+{
+  "rules": {
+    "preset-rasshii": {
+      "no-dropping-the-ra": false
+    }
+  }
+}
+```
+
+独自 prh.yml をマージ (プロジェクト固有辞書を追加):
+
+```json
+{
+  "rules": {
+    "preset-rasshii": {
+      "prh": {
+        "rulePaths": [
+          "./node_modules/textlint-rule-preset-rasshii/prh.yml",
+          "./project-prh.yml"
+        ]
+      }
+    }
+  }
+}
+```
+
+実行:
+
+```sh
+npx textlint "docs/**/*.md"
+npx textlint --fix "docs/**/*.md"   # 自動修正
 ```
 
 ## 含まれるルール
@@ -23,13 +76,14 @@ npx textlint <path>    # 任意ファイルをチェック
 | `ja-hiragana-fukushi` | 副詞のひらがな化推奨 |
 | `ja-hiragana-hojodoushi` | 補助動詞のひらがな化推奨 |
 | `ja-hiragana-daimeishi` | 指示代名詞のひらがな化推奨 |
-| `ja-keishikimeishi` | 形式名詞のひらがな化推奨 |
+| `ja-keishikimeishi` | 形式名詞のひらがな化推奨 (`detection_hou_kata: false`, `detection_ue: false`) |
 
 ## 表記揺れルールの追加
 
-`prh.yml` の `rules:` 配列に追加する。
+このリポジトリの `prh.yml` を直接編集するか、利用側で独自 `project-prh.yml` を作って `rulePaths` に追加する。
 
 ```yaml
+version: 1
 rules:
   - expected: TypeScript
     patterns:
@@ -44,19 +98,14 @@ rules:
 
 `specs:` のテストケースが失敗すると `prh.yml` 全体の load が失敗する。追加時は必ずテストケースを書く。
 
-## チェックの除外
+## 開発 (このリポを直接編集する場合)
 
-行コメントで textlint を範囲指定で無効化できる (`textlint-filter-rule-comments`)。
-
-```markdown
-<!-- textlint-disable -->
-この範囲は表記揺れチェック対象外。
-<!-- textlint-enable -->
+```sh
+git clone https://github.com/rasshii/original-text-lint.git
+cd original-text-lint
+npm install
+npm test               # test/sample.md で動作確認
 ```
-
-## 他リポからの利用 (Phase 1 以降)
-
-GitHub Actions の reusable workflow から呼び出して、各 docs リポで PR ごとに自動チェックする運用を想定している。
 
 ## ライセンス
 

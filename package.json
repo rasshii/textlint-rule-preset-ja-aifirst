@@ -1,8 +1,14 @@
 {
-  "name": "original-text-lint",
-  "version": "2.0.0",
-  "description": "Personal textlint config for AI-friendly Japanese writing (prh dictionary + JTF style + ja-hiragana rules).",
-  "private": true,
+  "name": "textlint-rule-preset-rasshii",
+  "version": "1.0.0",
+  "description": "textlint preset for AI-friendly Japanese writing: prh dictionary + JTF style + ja-hiragana rules.",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "prh.yml",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "lint": "textlint test/",
     "fix": "textlint --fix test/",
@@ -14,9 +20,11 @@
   },
   "keywords": [
     "textlint",
+    "textlint-rule-preset",
     "japanese",
     "proofreading",
-    "prh"
+    "prh",
+    "jtf-style"
   ],
   "author": "rasshii",
   "license": "ISC",
@@ -24,8 +32,11 @@
     "url": "https://github.com/rasshii/original-text-lint/issues"
   },
   "homepage": "https://github.com/rasshii/original-text-lint#readme",
+  "peerDependencies": {
+    "textlint": ">=13.0.0"
+  },
   "dependencies": {
-    "textlint": "^14.2.0",
+    "@textlint/module-interop": "^14.2.0",
     "textlint-filter-rule-comments": "^1.2.2",
     "textlint-rule-ja-hiragana-daimeishi": "^1.0.0",
     "textlint-rule-ja-hiragana-fukushi": "^1.3.0",
@@ -34,5 +45,8 @@
     "textlint-rule-no-dropping-the-ra": "^3.0.0",
     "textlint-rule-preset-jtf-style": "^2.3.14",
     "textlint-rule-prh": "^6.1.0"
+  },
+  "devDependencies": {
+    "textlint": "^14.2.0"
   }
 }
