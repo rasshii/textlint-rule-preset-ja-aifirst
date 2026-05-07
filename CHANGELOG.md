@@ -76,7 +76,7 @@
 
 ### Notes
 
-- `prh.yml` は 52 ルール (AI モデル / AI 概念 / AI 企業 / 開発ツールの表記揺れ)
+- `prh.yml` は 80 ルール (AI モデル / AI 概念 / AI 企業 / 開発ツールの表記揺れ。Phase 1 初出時 52 から 28 件拡張)
 - 独自ルールの fixture テストは `tools/test-custom-rules.mjs` で実行 (`@textlint/kernel` API 経由、devDependencies 追加なし)
 
 ## [1.0.1]
