@@ -3,6 +3,7 @@ const { moduleInterop } = require("@textlint/module-interop");
 
 const jtfStyle = moduleInterop(require("textlint-rule-preset-jtf-style"));
 const noUnbacktickIdentifier = require("./rules/no-unbacktick-identifier");
+const noVagueHeading = require("./rules/no-vague-heading");
 
 module.exports = {
   rules: {
@@ -29,6 +30,8 @@ module.exports = {
     "ja-no-abusage": moduleInterop(require("textlint-rule-ja-no-abusage")),
     // AI grep 最適化 (Phase 1: 独自ルール)
     "no-unbacktick-identifier": noUnbacktickIdentifier,
+    // AI grep 最適化 (Phase 2: 独自ルール)
+    "no-vague-heading": noVagueHeading,
   },
   rulesConfig: {
     ...jtfStyle.rulesConfig,
@@ -86,6 +89,10 @@ module.exports = {
     "ja-no-weak-phrase": true,
     "ja-no-abusage": true,
     "no-unbacktick-identifier": true,
+    // AI grep 最適化 (Phase 2)
+    "no-vague-heading": {
+      minLength: 4,
+    },
   },
   filters: {
     comments: moduleInterop(require("textlint-filter-rule-comments")),
