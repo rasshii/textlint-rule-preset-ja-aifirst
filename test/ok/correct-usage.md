@@ -42,4 +42,42 @@ Node.js のサーバーを npm で管理し、API を提供します。
 
 JavaScript で書かれた jQuery を使います。
 ECMAScript 5 の仕様を確認します。
-かもしれない、と書きます。
+
+## 略語の括弧表記 (正)
+
+Open Source Software (OSS) を使います。
+JavaScript (JS) で書きます。
+Large Language Model (LLM) は AI 技術の中核です。
+
+## 文末句点 (正)
+
+これは API です。
+別の文にも句点がついています。
+
+## 同一語の連続 (正、繰り返しなし)
+
+テストを実行します。
+データを取得します。
+
+## 強い言明 (正、弱い表現なし)
+
+この機能は動作します。
+仕様どおりに実装されています。
+
+## バッククォート識別子 (正、no-unbacktick-identifier の false positive 検証)
+
+依存追加は `npm install` を実行します。
+雛形は `npx create-next-app` で作成します。
+依存追加は `yarn add some-pkg` で行います。
+高速化のため `pnpm install` を選びます。
+
+コードブロック内のコマンドは検出対象外です。
+
+```sh
+npm install
+yarn add some-pkg
+pnpm install
+```
+
+Markdown link 内のラベルにあっても誤検知しません。詳細は [npm 公式](https://www.npmjs.com/) を参照します。
+

@@ -2,7 +2,8 @@
     "rules": {
         "preset-jtf-style": {
             "3.1.1.全角文字と半角文字の間": false,
-            "4.2.7.コロン(：)": false
+            "4.2.7.コロン(：)": false,
+            "4.3.1.丸かっこ（）": false
         },
         "no-dropping-the-ra": true,
         "ja-hiragana-fukushi": true,
@@ -35,7 +36,19 @@
         "max-kanji-continuous-len": {
             "max": 6
         },
-        "no-mixed-zenkaku-and-hankaku-alphabet": true
+        "no-mixed-zenkaku-and-hankaku-alphabet": true,
+        "abbr-within-parentheses": true,
+        "ja-no-mixed-period": {
+            "periodMark": "。",
+            "allowPeriodMarks": [":", "："],
+            "allowEmojiAtEnd": false,
+            "forceAppendPeriod": false
+        },
+        "ja-no-successive-word": {
+            "allowOnomatopee": true
+        },
+        "ja-no-weak-phrase": true,
+        "ja-no-abusage": true
     },
     "filters": {
         "comments": true
