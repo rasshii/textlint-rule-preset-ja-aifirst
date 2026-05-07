@@ -22,14 +22,19 @@ function buildPatterns(options) {
       label: p.label,
     }));
   }
-  return options.patterns.map((p) => ({
-    regex: new RegExp(p.source, p.flags || "g"),
-    label: p.label || "識別子",
-  }));
+  return options.patterns.map((p) => {
+    const userFlags = p.flags || "g";
+    // g フラグを強制 (`while (regex.exec(...))` で lastIndex が進まず無限ループになる事故を防ぐ)
+    const safeFlags = userFlags.includes("g") ? userFlags : userFlags + "g";
+    return {
+      regex: new RegExp(p.source, safeFlags),
+      label: p.label || "識別子",
+    };
+  });
 }
 
 const reporter = (context, options = {}) => {
-  const { Syntax, RuleError, report, getSource, locator } = context;
+  const { Syntax, RuleError, report, getSource, locator, fixer } = context;
   const patterns = buildPatterns(options);
 
   return {
@@ -46,7 +51,10 @@ const reporter = (context, options = {}) => {
             node,
             new RuleError(
               `${label} "${match[0]}" はバッククォートで囲んでください (例: \`${match[0]}\`) — AI grep の精度向上`,
-              { padding: locator.range([start, end]) }
+              {
+                padding: locator.range([start, end]),
+                fix: fixer.replaceTextRange([start, end], "`" + match[0] + "`"),
+              }
             )
           );
         }

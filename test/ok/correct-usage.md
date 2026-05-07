@@ -64,3 +64,20 @@ Large Language Model (LLM) は AI 技術の中核です。
 この機能は動作します。
 仕様どおりに実装されています。
 
+## バッククォート識別子 (正、no-unbacktick-identifier の false positive 検証)
+
+依存追加は `npm install` を実行します。
+雛形は `npx create-next-app` で作成します。
+依存追加は `yarn add some-pkg` で行います。
+高速化のため `pnpm install` を選びます。
+
+コードブロック内のコマンドは検出対象外です。
+
+```sh
+npm install
+yarn add some-pkg
+pnpm install
+```
+
+Markdown link 内のラベルにあっても誤検知しません。詳細は [npm 公式](https://www.npmjs.com/) を参照します。
+

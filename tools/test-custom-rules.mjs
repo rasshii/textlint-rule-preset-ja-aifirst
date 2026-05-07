@@ -14,6 +14,28 @@ const preset = require("../index.js");
 
 const kernel = new TextlintKernel();
 
+// Sanity: preset module 経由で独自 rule を取り出せること (`index.js` の rule export が
+// 壊れていないことを保証。textlint の rule resolver 仕様で `.textlintrc.json` 経由の
+// 統合テストは利用者環境 (npm install 後) でしか不可能なため、本 sanity check が
+// 実質的な「preset 統合経路の保証」になる)
+if (!preset.rules || typeof preset.rules !== "object") {
+  console.error("FAIL: preset.rules is not exported");
+  process.exit(1);
+}
+if (typeof preset.rules["no-unbacktick-identifier"] !== "object") {
+  console.error("FAIL: preset.rules['no-unbacktick-identifier'] is missing or not exported as object");
+  process.exit(1);
+}
+if (typeof preset.rules["no-unbacktick-identifier"].linter !== "function") {
+  console.error("FAIL: preset.rules['no-unbacktick-identifier'].linter is missing");
+  process.exit(1);
+}
+if (typeof preset.rules["no-unbacktick-identifier"].fixer !== "function") {
+  console.error("FAIL: preset.rules['no-unbacktick-identifier'].fixer is missing");
+  process.exit(1);
+}
+console.log("OK   sanity: preset.rules['no-unbacktick-identifier'] exports linter + fixer");
+
 const TEST_CASES = {
   "no-unbacktick-identifier": {
     rule: preset.rules["no-unbacktick-identifier"],
@@ -43,6 +65,27 @@ const TEST_CASES = {
         name: "1 行に複数のコマンドが混在しても全件検出",
         text: "npm install のあと npm run build を流す。",
         expectedCount: 2,
+      },
+      {
+        name: "Heading 内のコマンドも検出",
+        text: "## npm install の使い方\n",
+        expectedMessageIncludes: "npm install",
+      },
+      {
+        name: "options.patterns で Docker コマンドを検出",
+        text: "Docker run app を実行する。",
+        expectedMessageIncludes: "Docker run",
+        optionsOverride: {
+          patterns: [{ source: "\\b[Dd]ocker\\s+\\w+", label: "Docker コマンド" }],
+        },
+      },
+      {
+        name: "g フラグなしの patterns でも無限ループせず正常検出",
+        text: "TODO を残してはいけない。",
+        expectedMessageIncludes: "TODO",
+        optionsOverride: {
+          patterns: [{ source: "TODO", flags: "i", label: "TODO" }],
+        },
       },
     ],
     valid: [
@@ -88,7 +131,10 @@ for (const [ruleId, spec] of Object.entries(TEST_CASES)) {
   };
 
   for (const c of spec.invalid) {
-    const result = await kernel.lintText(c.text, { ...baseLintOptions, rules: [ruleEntry] });
+    const entryForCase = c.optionsOverride
+      ? { ...ruleEntry, options: c.optionsOverride }
+      : ruleEntry;
+    const result = await kernel.lintText(c.text, { ...baseLintOptions, rules: [entryForCase] });
     const messages = result.messages;
     const ruleHits = messages.filter((m) => m.ruleId === ruleId);
     const matchesIncludes = c.expectedMessageIncludes
@@ -122,6 +168,29 @@ for (const [ruleId, spec] of Object.entries(TEST_CASES)) {
       console.error(`  unexpected: ${ruleHits.map((m) => m.message).join(" | ")}`);
       failed++;
     }
+  }
+}
+
+// fix payload の検証 (autofix が backtick 置換を生成するか)
+{
+  const ruleEntry = {
+    ruleId: "no-unbacktick-identifier",
+    rule: preset.rules["no-unbacktick-identifier"],
+    options: preset.rulesConfig["no-unbacktick-identifier"] ?? true,
+  };
+  const result = await kernel.lintText("npm install を実行する。", {
+    ...baseLintOptions,
+    rules: [ruleEntry],
+  });
+  const hit = result.messages.find((m) => m.ruleId === "no-unbacktick-identifier");
+  const expectedFixText = "`npm install`";
+  if (hit && hit.fix && hit.fix.text === expectedFixText) {
+    console.log(`OK   [no-unbacktick-identifier] fix:    autofix が backtick 置換 (${expectedFixText}) を生成`);
+    passed++;
+  } else {
+    console.error("FAIL [no-unbacktick-identifier] fix:    autofix の fix payload が不正");
+    console.error(`  hit: ${JSON.stringify(hit)}`);
+    failed++;
   }
 }
 

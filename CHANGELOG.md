@@ -32,8 +32,11 @@
 - `test/ng/` に 5 fixture を追加 (各 Phase 1 ルールの検出を保証)
 - `test/ok/correct-usage.md` に Phase 1 対応の正例を追記
 - 独自ルール unit test (`tools/test-custom-rules.mjs`) を追加
-  - `@textlint/kernel` API 経由で `no-unbacktick-identifier` の invalid / valid ケースを inline で検証 (10 ケース)
+  - `@textlint/kernel` API 経由で `no-unbacktick-identifier` の invalid / valid / fix ケースを inline で検証 (14 ケース)
   - `npm test` に `test:custom` script として組込み
+- `test/ok/correct-usage.md` に `no-unbacktick-identifier` の正例 (バッククォート / CodeBlock / Markdown link) を追加
+- `CONTRIBUTING.md` を新規作成: dogfood の `textlint-disable` 規約とルール追加チェックリストを明記
+- README に `no-unbacktick-identifier` の `patterns` option ドキュメントを追加 (shape・ReDoS 注意・autofix 動作)
 
 ### Changed
 
@@ -44,6 +47,17 @@
 - `package.json` の `files` フィールドに `rules/`, `docs/`, `CHANGELOG.md` を追加
   - 利用側で独自ルール (`no-unbacktick-identifier`) を解決するため `rules/` が必須
 - `package.json` の `description` を AI grep 最適化文脈に更新
+
+### Fixed
+
+- `no-unbacktick-identifier`: `patterns` option で `g` フラグを含まない regex を渡された場合の無限ループ DoS を修正
+  - ローカル実測 25M iter / 1.5s で hang
+- `no-unbacktick-identifier`: `fixer` を export しているが `fix` payload を返していなかった問題を修正
+  - `textlint --fix` で自動的にバッククォート補完される
+- `tools/test-ng.mjs`: manifest ベース (`mustHit` + `min`) に変更
+  - 件数下限のみのチェックから移行し、silent regression を防止
+- `test/ng/doubled-joshi.md`: `no-doubled-joshi` で確実に発火する文面に修正
+  - 旧 fixture は `min_interval: 1` で発火せず、別 rule の偶発ヒットで偽合格していた
 
 ### Notes
 
