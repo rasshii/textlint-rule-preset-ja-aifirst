@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^textlint$", "^@textlint/"],
+      "groupName": "textlint core"
+    },
+    {
+      "matchPackagePatterns": ["^textlint-rule-", "^textlint-filter-rule-"],
+      "groupName": "textlint rules"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["breaking-change"]
+    }
+  ]
+}
