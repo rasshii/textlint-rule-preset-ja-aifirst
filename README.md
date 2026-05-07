@@ -252,7 +252,7 @@ test/
 
 ### 独自ルール (`no-unbacktick-identifier`) のローカル検証
 
-独自ルールは preset 経由 (`preset-ja-aifirst/no-unbacktick-identifier`) で利用側で動作します。リポ自身の `.textlintrc.json` では textlint の rule resolver が node_modules 経由でしか個別ルールを解決できない仕様です。そのため独自ルールの fixture テストはローカル `npm test` の対象外です。preset 利用側で動作確認してください。
+独自ルールは preset 経由 (`preset-ja-aifirst/no-unbacktick-identifier`) で利用側で動作します。リポ自身の `.textlintrc.json` では textlint の rule resolver が node_modules 経由でしか個別ルールを解決できない仕様です。そのため `tools/test-custom-rules.mjs` で `@textlint/kernel` API 経由の inline テストを実行します (`npm test` に組込み済み)。
 
 要件: Node.js 18+ (prh.YAML 内の lookbehind regex を使用）
 

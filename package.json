@@ -18,7 +18,8 @@
     "lint:dogfood": "textlint README.md docs/RATIONALE.md CHANGELOG.md",
     "fix": "textlint --fix test/",
     "test:ng": "node tools/test-ng.mjs",
-    "test": "npm run lint:ok && npm run test:ng && npm run lint:dogfood"
+    "test:custom": "node tools/test-custom-rules.mjs",
+    "test": "npm run lint:ok && npm run test:ng && npm run test:custom && npm run lint:dogfood"
   },
   "repository": {
     "type": "git",

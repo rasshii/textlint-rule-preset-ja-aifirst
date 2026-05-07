@@ -31,6 +31,9 @@
   - 全出典 (一次資料・二次資料・反対意見) と運用ルール (§7) を整理
 - `test/ng/` に 5 fixture を追加 (各 Phase 1 ルールの検出を保証)
 - `test/ok/correct-usage.md` に Phase 1 対応の正例を追記
+- 独自ルール unit test (`tools/test-custom-rules.mjs`) を追加
+  - `@textlint/kernel` API 経由で `no-unbacktick-identifier` の invalid / valid ケースを inline で検証 (10 ケース)
+  - `npm test` に `test:custom` script として組込み
 
 ### Changed
 
@@ -45,7 +48,7 @@
 ### Notes
 
 - `prh.yml` は 52 ルール (AI モデル / AI 概念 / AI 企業 / 開発ツールの表記揺れ)
-- 独自ルールの fixture テストは現状 `npm test` の対象外。textlint の rule resolver は node_modules 経由でしか個別ルールを解決できないため、preset 利用側で動作検証する。Phase 1.x で `tools/test-custom-rules.mjs` の整備を予定
+- 独自ルールの fixture テストは `tools/test-custom-rules.mjs` で実行 (`@textlint/kernel` API 経由、devDependencies 追加なし)
 
 ## [1.0.1]
 
