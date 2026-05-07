@@ -3,7 +3,7 @@
 [textlint](https://github.com/textlint/textlint) preset for AI-friendly Japanese writing.
 
 AI 時代の高品質な日本語文書を書くための textlint preset。
-**主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin) は ripgrep ベースの agentic search で codebase を読みます**。本 preset は、AI grep の精度を最大化する日本語ドキュメント品質ガードを目的とします。
+**主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin) は ripgrep ベースの Agentic search で codebase を読みます**。本 preset は、AI grep の精度を最大化する日本語ドキュメント品質ガードを目的とします。
 
 3 つの観点を 1 つの preset に統合しています:
 
@@ -13,9 +13,9 @@ AI 時代の高品質な日本語文書を書くための textlint preset。
 
 ## なぜ AI grep に最適化された日本語が必要か
 
-主要な LLM コーディングアシスタントは、ベクトル検索（RAG）ではなく **ripgrep ベースの agentic search** で codebase を読みます。これは複数のソースで裏付けられています。
+主要な LLM コーディングアシスタントは、ベクトル検索（RAG）ではなく **ripgrep ベースの Agentic search** で codebase を読みます。これは複数のソースで裏付けられています。
 
-> "Initially, Claude Code experimented with RAG and a local vector database, but agentic search outperformed it overwhelmingly."
+> "Initially, Claude Code experimented with RAG and a local vector database, but Agentic search outperformed it overwhelmingly."
 > — Boris Cherny, Anthropic, [Latent Space podcast (2025-05)](https://www.latent.space/p/claude-code)
 
 > "Keyword search via agentic tool use achieves over 90% of RAG performance without a vector database."

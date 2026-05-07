@@ -41,6 +41,21 @@ PR 内で `textlint-disable` を増やす場合、PR description で理由を ju
 
 独自 rule は textlint の rule resolver 仕様で `test:ng` の対象外です (`.textlintrc.json` には npm package 名でしか登録できないため)。代わりに `tools/test-custom-rules.mjs` で `@textlint/kernel` API 経由の inline テストを実行します。
 
+## devDependencies / `prh.yml` 追加時の規約
+
+`tools/test-custom-rules.mjs` から呼び出す `@textlint/*` パッケージを `devDependencies` に追加する場合、以下を遵守してください。
+
+- textlint 本体と同じ major version を維持 (例: textlint `^14.2.0` なら `@textlint/kernel: ^14.2.0`)
+- transitive dep に頼らず、明示的に `devDependencies` に列挙 (textlint major bump 時の暗黙依存切れを防ぐ)
+- `package-lock.json` を必ず commit に含める
+
+`prh.yml` に AI モデル名 / 開発ツール名を追加する場合、以下を遵守してください。
+
+- 最新公式表記を context7 / WebSearch で **必ず** 検証 (記憶ベース提案を避ける、誤った表記の永続化を防ぐ)
+- 各 entry には `expected`、`patterns` (誤った表記の regex)、`specs` (動作確認テスト) を記載
+- 追加後は `npm test` で全 stage pass を確認 (`prh.yml` の `specs` 失敗は yaml load 全体を壊す)
+- ng fixture (`test/ng/ai-models.md` 等) と dogfood (README / RATIONALE / CHANGELOG) で発火する箇所がないか `lint:dogfood` で確認
+
 ## 動作確認
 
 PR 作成前に以下を実行してください。

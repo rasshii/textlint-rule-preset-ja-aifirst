@@ -7,18 +7,21 @@
 
 ## 1. 背景: LLM コーディングアシスタントの検索アルゴリズム
 
-主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin 等) は、ripgrep ベースの agentic search を採用している。これはベクトル検索 (RAG) ではなく keyword 検索ベースの手法である。本セクションでは、その経緯と検証された根拠を整理する。
+主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin 等) は、ripgrep ベースの Agentic search を採用している。これはベクトル検索 (RAG) ではなく keyword 検索ベースの手法である。本セクションでは、その経緯と検証された根拠を整理する。
 
 ### 1.1 Anthropic 公式の見解 (Boris Cherny, Claude Code lead)
 
 - 出典: [Latent Space podcast (2025-05)](https://www.latent.space/p/claude-code)
-- 主要引用 (意訳): 初期 Claude Code は RAG とローカルベクトル DB を試したが、agentic search が圧倒的に上回った
-- 文脈: 初期は RAG を試したが、コードベースに対する精度・freshness・privacy のいずれも agentic search が優位だったため、ripgrep ベースに舵を切った
+- 主要引用 (意訳): 初期 Claude Code は RAG とローカルベクトル DB を試したが、Agentic search が圧倒的に上回った
+- 文脈: 初期は RAG を試したが、コードベースに対する精度・freshness・privacy のいずれも Agentic search が優位だったため、ripgrep ベースに舵を切った
 
 ### 1.2 学術的検証 (Amazon Science, 2026-02)
 
 - 出典: [Beyond Embeddings: Agentic Search for Code (2026-02)](https://www.amazon.science/publications/agentic-search-without-embeddings)
+<!-- 引用文 (Amazon Science 原文 "keyword search via agentic tool use") を保護するため prh を局所 disable -->
+<!-- textlint-disable prh -->
 - 主張: keyword search via agentic tool use が RAG の 90% 以上の性能をベクトル DB なしで達成
+<!-- textlint-enable prh -->
 - 検証データセット: コード検索タスクの retrieval ベンチマークにおいて、index 構築不要のまま keyword 検索が semantic 検索に匹敵する精度を示した
 
 ### 1.3 業界実装の傾向
@@ -57,7 +60,7 @@
 
 ## 3. Iterative refinement の重要性
 
-agentic search の核心は「Query → Result → 不十分 → Refined Query → Better Result」の対話的検索にある。これは単発 RAG では実現できない。日本語ドキュメントにも次の要件を課す。
+Agentic search の核心は「Query → Result → 不十分 → Refined Query → Better Result」の対話的検索にある。これは単発 RAG では実現できない。日本語ドキュメントにも次の要件を課す。
 
 - 関連語の併記 (略語の展開、同義語のカバー)
 - 見出しの具体化 (refinement の手がかり）
