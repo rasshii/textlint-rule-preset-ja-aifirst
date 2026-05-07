@@ -32,9 +32,11 @@ module.exports = {
   },
   rulesConfig: {
     ...jtfStyle.rulesConfig,
-    // AI ファースト方針: 半角スペース・半角コロンを許容 (技術文書慣習)
+    // AI ファースト方針: 半角スペース・半角コロン・半角丸かっこを許容 (技術文書慣習)
+    // 4.3.1 は abbr-within-parentheses (`Open Source Software (OSS)`) との矛盾解消のため必須
     "3.1.1.全角文字と半角文字の間": false,
     "4.2.7.コロン(：)": false,
+    "4.3.1.丸かっこ（）": false,
     "no-dropping-the-ra": true,
     "ja-hiragana-fukushi": true,
     "ja-hiragana-hojodoushi": true,
@@ -72,6 +74,9 @@ module.exports = {
     "abbr-within-parentheses": true,
     "ja-no-mixed-period": {
       periodMark: "。",
+      // preset の jtf-style/4.2.7 (半角コロン) を disable している方針と整合させ
+      // 「Note:」「Example:」「説明する場合:」のようなリード文を許容する
+      allowPeriodMarks: [":", "："],
       allowEmojiAtEnd: false,
       forceAppendPeriod: false,
     },

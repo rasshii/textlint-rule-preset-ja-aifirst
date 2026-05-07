@@ -15,9 +15,10 @@
   "scripts": {
     "lint": "textlint test/ng/ test/ok/",
     "lint:ok": "textlint test/ok/",
+    "lint:dogfood": "textlint README.md docs/RATIONALE.md CHANGELOG.md",
     "fix": "textlint --fix test/",
     "test:ng": "node tools/test-ng.mjs",
-    "test": "npm run lint:ok && npm run test:ng"
+    "test": "npm run lint:ok && npm run test:ng && npm run lint:dogfood"
   },
   "repository": {
     "type": "git",
