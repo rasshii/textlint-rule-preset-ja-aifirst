@@ -39,7 +39,7 @@ AI 時代の高品質な日本語文書を書くための textlint preset。
 | 失敗が「0 件」 | 略語の展開明示 | `abbr-within-parentheses` |
 | Iterative refinement | 弱表現排除で言明確定 | `ja-no-weak-phrase` |
 | 識別子の完全一致 hit | 関数名やコマンドのバッククォート | `no-unbacktick-identifier` (独自) |
-| 構造的関係を活用 | 見出し階層の意味化 | `no-vague-heading` (Phase 2 で導入予定) |
+| 構造的関係を活用 | 見出し階層の意味化 | `no-vague-heading` (独自、v1.2.0~) |
 
 **詳細な根拠・全出典・各ルールと根拠の対応関係**: [docs/RATIONALE.md](./docs/RATIONALE.md) を参照してください。
 
@@ -116,7 +116,7 @@ npx textlint --fix "docs/**/*.md"   # 自動修正
 
 <!-- textlint-disable ja-no-weak-phrase -->
 
-### AI grep 最適化 (Phase 1)
+### AI grep 最適化
 
 | ルール | 用途 | デフォルト設定 |
 |---|---|---|
@@ -125,6 +125,7 @@ npx textlint --fix "docs/**/*.md"   # 自動修正
 | `ja-no-mixed-period` | 文末句点の徹底 | `forceAppendPeriod: false` (検出のみ) |
 | `ja-no-weak-phrase` | 弱表現 (「かもしれない」「と思います」) を検出 | enabled |
 | `no-unbacktick-identifier` | コマンドや識別子をバッククォートで囲む (`npm install` → `` `npm install` ``)。`textlint --fix` で自動補完 | enabled (デフォルトパターンは npm/npx/yarn/pnpm のみ、`patterns` option で拡張可能) |
+| `no-vague-heading` (v1.2.0~) | 短すぎる見出し (default `minLength: 4`) と曖昧語の見出しを警告 | enabled (`vagueWords` は default 空配列、利用者が自プロジェクトの曖昧語を define) |
 | `ja-no-successive-word` | 同一語の連続 (AI 出力のノイズ) を検出 | `allowOnomatopee: true` |
 | `ja-no-abusage` | 日本語の誤用 (「値を返す」等) を検出 | enabled |
 

@@ -152,10 +152,28 @@ const TEST_CASES = {
         expectedMessageIncludes: "TIPS",
         optionsOverride: { minLength: 6 },
       },
+      {
+        name: "options.vagueWords=['TIPS'] で『TIPS』 (default minLength=4 OK でも) を検出",
+        text: "# TIPS\n",
+        expectedMessageIncludes: "vagueWords",
+        optionsOverride: { vagueWords: ["TIPS"] },
+      },
+      {
+        name: "options.vagueWords で 4 文字以上の日本語曖昧語『メモ書き』を検出 (minLength では拾えない)",
+        text: "## メモ書き\n",
+        expectedMessageIncludes: "vagueWords",
+        optionsOverride: { vagueWords: ["メモ書き", "サンプル"] },
+      },
+      {
+        name: "vagueWords 完全一致のみ判定 (前後文字を含む見出しは見逃さない方針: 完全一致のみ)",
+        text: "# Tips for v1.1.0\n",
+        expectedMessageIncludes: "Tips",
+        optionsOverride: { vagueWords: ["Tips for v1.1.0"] },
+      },
     ],
     valid: [
       {
-        name: "4 文字 (TIPS) は default minLength=4 で OK (length === minLength)",
+        name: "4 文字 (TIPS) は default minLength=4 + vagueWords=[] で OK",
         text: "# TIPS\n",
       },
       {
@@ -169,6 +187,15 @@ const TEST_CASES = {
       {
         name: "InlineCode を含む見出しは合算文字数で判定 (`npm install` の手順 = 13 文字)",
         text: "## `npm install` の手順\n",
+      },
+      {
+        name: "vagueWords default = [] のため案件外 (preset は machinery のみ提供)",
+        text: "## TIPS\n## Notes\n## Memo\n",
+      },
+      {
+        name: "vagueWords 部分一致は誤検出しない (完全一致のみ)",
+        text: "## TIPS for v1.1.0 リリース\n",
+        // optionsOverride で vagueWords=['TIPS'] を渡しても "TIPS for v1.1.0 リリース" 全体は一致しない
       },
     ],
   },
