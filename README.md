@@ -34,7 +34,7 @@ AI 時代の高品質な日本語文書を書くための textlint preset。
 
 | AI grep の特性 | 必要な日本語の性質 | 本 preset での対応ルール |
 |---|---|---|
-| 完全一致のみ hit | 表記揺れ排除 | `prh` (内蔵 52 ルール) |
+| 完全一致のみ hit | 表記揺れ排除 | `prh` (内蔵 80 ルール) |
 | chunk 分割なし、文単位読み | 文の境界明示 | `ja-no-mixed-period` |
 | 失敗が「0 件」 | 略語の展開明示 | `abbr-within-parentheses` |
 | Iterative refinement | 弱表現排除で言明確定 | `ja-no-weak-phrase` |
@@ -120,7 +120,7 @@ npx textlint --fix "docs/**/*.md"   # 自動修正
 
 | ルール | 用途 | デフォルト設定 |
 |---|---|---|
-| `prh` | **AI モデル名 / AI 概念 / AI 企業 / 開発ツールの表記揺れ統一** (`prh.yml` 内蔵、52 ルール) | enabled |
+| `prh` | **AI モデル名 / AI 概念 / AI 企業 / 開発ツールの表記揺れ統一** (`prh.yml` 内蔵、80 ルール) | enabled |
 | `abbr-within-parentheses` | 略語の括弧表記 (`OSS(Open Source Software)` → `Open Source Software (OSS)`) | enabled |
 | `ja-no-mixed-period` | 文末句点の徹底 | `forceAppendPeriod: false` (検出のみ) |
 | `ja-no-weak-phrase` | 弱表現 (「かもしれない」「と思います」) を検出 | enabled |
