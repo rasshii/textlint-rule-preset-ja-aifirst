@@ -6,7 +6,7 @@
 
 ## [1.1.0] - 2026-05-07
 
-主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin) は ripgrep ベースの agentic search を採用している。この事実を踏まえ、AI grep の精度を最大化する日本語ガードを preset の core 責務として明示化したリリース。
+主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin) は ripgrep ベースの Agentic search を採用している。この事実を踏まえ、AI grep の精度を最大化する日本語ガードを preset の core 責務として明示化したリリース。
 
 ### Added
 
@@ -37,6 +37,21 @@
 - `test/ok/correct-usage.md` に `no-unbacktick-identifier` の正例 (バッククォート / CodeBlock / Markdown link) を追加
 - `CONTRIBUTING.md` を新規作成: dogfood の `textlint-disable` 規約とルール追加チェックリストを明記
 - README に `no-unbacktick-identifier` の `patterns` option ドキュメントを追加 (shape・ReDoS 注意・autofix 動作)
+- `.github/workflows/test.yml`: Node 18/20/22 マトリクスで `npm test` を CI 実行
+- `package.json` に `engines.node: ">=18.14.0"` を追加 (textlint 14 と整合)
+- `package.json` の `devDependencies` に `@textlint/kernel` と `@textlint/textlint-plugin-markdown` を明示
+  - 利用者向け文言ではなく開発者向けの transitive dep 依存解消
+- `prh.yml` に 28 件追加 (52 → 80 ルール、2026-05 時点で WebSearch 検証済み)
+  - AI モデル (OpenAI): GPT-5、GPT-5.5、GPT-4.5、GPT-4.1
+  - AI モデル (Anthropic): Claude Opus、Claude Sonnet、Claude Haiku
+  - AI モデル (Google): Gemini Pro、Gemini Flash、Gemini Nano
+  - AI モデル (Meta): Llama、Llama 3、Llama 4
+  - AI モデル (他): Grok、DeepSeek、DeepSeek-V3、DeepSeek-R1
+  - AI 開発ツール: Cursor、Devin、Windsurf、Bolt.new、Lovable
+  - AI 概念: Tool Use、Function Calling、Agentic、Multi-Agent
+  - 企業: xAI、Cohere
+- `test/ng/ja-hiragana.md` に hojodoushi (致す → いたす) と daimeishi (此処 → ここ) の補強例
+- `CONTRIBUTING.md` に devDependencies / `prh.yml` 追加時のチェックリストを補強
 
 ### Changed
 

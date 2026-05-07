@@ -492,3 +492,255 @@ rules:
         to: API
       - from: Api
         to: API
+
+  # === Additional AI Models (v1.1.0, 2026-05 検証済み) ===
+
+  - expected: GPT-5
+    patterns:
+      - /(?<![-\w])(GPT5|gpt-5|gpt5|GPT 5|Gpt-5)(?![-\w])/
+    specs:
+      - from: GPT5
+        to: GPT-5
+      - from: gpt-5
+        to: GPT-5
+
+  - expected: GPT-5.5
+    patterns:
+      - /(?<![-\w])(GPT5\.5|gpt-5\.5|gpt5\.5|GPT 5\.5)(?![-\w])/
+    specs:
+      - from: GPT5.5
+        to: GPT-5.5
+      - from: gpt-5.5
+        to: GPT-5.5
+
+  - expected: GPT-4.5
+    patterns:
+      - /(?<![-\w])(GPT4\.5|gpt-4\.5|gpt4\.5|GPT 4\.5)(?![-\w])/
+    specs:
+      - from: GPT4.5
+        to: GPT-4.5
+      - from: gpt-4.5
+        to: GPT-4.5
+
+  - expected: GPT-4.1
+    patterns:
+      - /(?<![-\w])(GPT4\.1|gpt-4\.1|gpt4\.1|GPT 4\.1)(?![-\w])/
+    specs:
+      - from: GPT4.1
+        to: GPT-4.1
+      - from: gpt-4.1
+        to: GPT-4.1
+
+  - expected: Claude Opus
+    patterns:
+      - /(?<![-\w])(claude opus|claude-opus|ClaudeOpus|claudeopus)(?![-\w])/i
+    specs:
+      - from: claude opus
+        to: Claude Opus
+      - from: ClaudeOpus
+        to: Claude Opus
+
+  - expected: Claude Sonnet
+    patterns:
+      - /(?<![-\w])(claude sonnet|claude-sonnet|ClaudeSonnet|claudesonnet)(?![-\w])/i
+    specs:
+      - from: claude sonnet
+        to: Claude Sonnet
+      - from: ClaudeSonnet
+        to: Claude Sonnet
+
+  - expected: Claude Haiku
+    patterns:
+      - /(?<![-\w])(claude haiku|claude-haiku|ClaudeHaiku|claudehaiku)(?![-\w])/i
+    specs:
+      - from: claude haiku
+        to: Claude Haiku
+      - from: ClaudeHaiku
+        to: Claude Haiku
+
+  - expected: Gemini Pro
+    patterns:
+      - /(?<![-\w])(gemini pro|gemini-pro|GeminiPro|geminipro)(?![-\w])/i
+    specs:
+      - from: gemini pro
+        to: Gemini Pro
+      - from: GeminiPro
+        to: Gemini Pro
+
+  - expected: Gemini Flash
+    patterns:
+      - /(?<![-\w])(gemini flash|gemini-flash|GeminiFlash|geminiflash)(?![-\w])/i
+    specs:
+      - from: gemini flash
+        to: Gemini Flash
+      - from: GeminiFlash
+        to: Gemini Flash
+
+  - expected: Gemini Nano
+    patterns:
+      - /(?<![-\w])(gemini nano|gemini-nano|GeminiNano|gemininano)(?![-\w])/i
+    specs:
+      - from: gemini nano
+        to: Gemini Nano
+
+  - expected: Llama
+    patterns:
+      - /(?<![-\w])(LLaMA|llama|LLAMA)(?![-\w])/
+    specs:
+      - from: LLaMA
+        to: Llama
+      - from: llama
+        to: Llama
+
+  - expected: Llama 3
+    patterns:
+      - /(?<![-\w])(llama3|LLaMA3|LLaMA-3|llama-3)(?![-\w])/
+    specs:
+      - from: llama3
+        to: Llama 3
+      - from: LLaMA-3
+        to: Llama 3
+
+  - expected: Llama 4
+    patterns:
+      - /(?<![-\w])(llama4|LLaMA4|LLaMA-4|llama-4)(?![-\w])/
+    specs:
+      - from: llama4
+        to: Llama 4
+      - from: LLaMA-4
+        to: Llama 4
+
+  - expected: Grok
+    patterns:
+      - /(?<![-\w])(grok|GROK)(?![-\w])/
+    specs:
+      - from: grok
+        to: Grok
+      - from: GROK
+        to: Grok
+
+  - expected: DeepSeek
+    patterns:
+      - /(?<![-\w])(deepseek|Deepseek|DEEPSEEK|deep seek|Deep Seek)(?![-\w])/
+    specs:
+      - from: deepseek
+        to: DeepSeek
+      - from: deep seek
+        to: DeepSeek
+
+  - expected: DeepSeek-V3
+    patterns:
+      - /(?<![-\w])(deepseek v3|deepseek-v3|DeepSeekV3|deepseekv3)(?![-\w])/i
+    specs:
+      - from: deepseek v3
+        to: DeepSeek-V3
+      - from: DeepSeekV3
+        to: DeepSeek-V3
+
+  - expected: DeepSeek-R1
+    patterns:
+      - /(?<![-\w])(deepseek r1|deepseek-r1|DeepSeekR1|deepseekr1)(?![-\w])/i
+    specs:
+      - from: deepseek r1
+        to: DeepSeek-R1
+      - from: DeepSeekR1
+        to: DeepSeek-R1
+
+  # === Additional AI Coding Assistants / IDEs (v1.1.0) ===
+
+  - expected: Cursor
+    patterns:
+      - /(?<![-\w])(cursor IDE|Cursor IDE|cursor editor)(?![-\w])/
+    specs:
+      - from: cursor IDE
+        to: Cursor
+      - from: cursor editor
+        to: Cursor
+
+  - expected: Devin
+    patterns:
+      - /(?<![-\w])(devin AI|Devin AI|devin)(?![-\w])/
+    specs:
+      - from: devin
+        to: Devin
+      - from: devin AI
+        to: Devin
+
+  - expected: Windsurf
+    patterns:
+      - /(?<![-\w])(windsurf|WINDSURF|wind surf)(?![-\w])/
+    specs:
+      - from: windsurf
+        to: Windsurf
+      - from: wind surf
+        to: Windsurf
+
+  - expected: Bolt.new
+    patterns:
+      - /(?<![-\w])(bolt\.new|boltnew|Bolt new|bolt new)(?![-\w])/i
+    specs:
+      - from: bolt.new
+        to: Bolt.new
+      - from: bolt new
+        to: Bolt.new
+
+  - expected: Lovable
+    patterns:
+      - /(?<![-\w])(lovable|LOVABLE)(?![-\w])/
+    specs:
+      - from: lovable
+        to: Lovable
+
+  # === Additional AI Concepts (v1.1.0) ===
+
+  - expected: Tool Use
+    patterns:
+      - /(?<![-\w])(tool use|tool-use|ToolUse|tooluse)(?![-\w])/i
+    specs:
+      - from: tool use
+        to: Tool Use
+      - from: ToolUse
+        to: Tool Use
+
+  - expected: Function Calling
+    patterns:
+      - /(?<![-\w])(function calling|function-calling|FunctionCalling|functioncalling)(?![-\w])/i
+    specs:
+      - from: function calling
+        to: Function Calling
+      - from: FunctionCalling
+        to: Function Calling
+
+  - expected: Agentic
+    patterns:
+      - /(?<![-\w])(agentic|AGENTIC)(?![-\w])/
+    specs:
+      - from: agentic
+        to: Agentic
+
+  - expected: Multi-Agent
+    patterns:
+      - /(?<![-\w])(multi agent|multiagent|multi-agents|MultiAgent)(?![-\w])/i
+    specs:
+      - from: multi agent
+        to: Multi-Agent
+      - from: multiagent
+        to: Multi-Agent
+
+  # === Additional AI Companies (v1.1.0) ===
+
+  - expected: xAI
+    patterns:
+      - /(?<![-\w])(xai|X AI|x-ai|XAI|Xai)(?![-\w])/
+    specs:
+      - from: xai
+        to: xAI
+      - from: X AI
+        to: xAI
+
+  - expected: Cohere
+    patterns:
+      - /(?<![-\w])(cohere|COHERE)(?![-\w])/
+    specs:
+      - from: cohere
+        to: Cohere
