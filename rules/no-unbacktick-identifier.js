@@ -2,6 +2,9 @@
 // 文中で識別子 (npm/yarn/pnpm/npx コマンド) がバッククォート未使用のときに警告する
 // バッククォートで囲むことで AI が識別子を完全一致 grep できる
 
+const DOCS_URL =
+  "https://github.com/rasshii/textlint-rule-preset-ja-aifirst#含まれるルール";
+
 const DEFAULT_PATTERNS = [
   { source: "\\b(?:npm|npx|yarn|pnpm)\\s+\\w[\\w-]*", flags: "g", label: "コマンド" },
 ];
@@ -50,7 +53,7 @@ const reporter = (context, options = {}) => {
           report(
             node,
             new RuleError(
-              `${label} "${match[0]}" はバッククォートで囲んでください (例: \`${match[0]}\`) — AI grep の精度向上`,
+              `${label} "${match[0]}" はバッククォートで囲んでください (例: \`${match[0]}\`) — AI grep の精度向上 [${DOCS_URL}]`,
               {
                 padding: locator.range([start, end]),
                 fix: fixer.replaceTextRange([start, end], "`" + match[0] + "`"),

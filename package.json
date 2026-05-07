@@ -34,7 +34,13 @@
     "prh",
     "jtf-style",
     "ai",
-    "llm"
+    "llm",
+    "claude-code",
+    "cursor",
+    "ai-coding",
+    "ai-grep",
+    "agentic",
+    "technical-writing"
   ],
   "author": "rasshii",
   "license": "ISC",
