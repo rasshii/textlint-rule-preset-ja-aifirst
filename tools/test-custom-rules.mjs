@@ -36,6 +36,16 @@ if (typeof preset.rules["no-unbacktick-identifier"].fixer !== "function") {
 }
 console.log("OK   sanity: preset.rules['no-unbacktick-identifier'] exports linter + fixer");
 
+if (typeof preset.rules["no-vague-heading"] !== "object") {
+  console.error("FAIL: preset.rules['no-vague-heading'] is missing or not exported as object");
+  process.exit(1);
+}
+if (typeof preset.rules["no-vague-heading"].linter !== "function") {
+  console.error("FAIL: preset.rules['no-vague-heading'].linter is missing");
+  process.exit(1);
+}
+console.log("OK   sanity: preset.rules['no-vague-heading'] exports linter");
+
 const TEST_CASES = {
   "no-unbacktick-identifier": {
     rule: preset.rules["no-unbacktick-identifier"],
@@ -108,6 +118,84 @@ const TEST_CASES = {
       {
         name: "Markdown link 内のラベルにマッチしない",
         text: "詳細は [npm 公式](https://www.npmjs.com/) を参照する。",
+      },
+    ],
+  },
+  "no-vague-heading": {
+    rule: preset.rules["no-vague-heading"],
+    options: preset.rulesConfig["no-vague-heading"],
+    invalid: [
+      {
+        name: "2 文字見出し『概要』 (default minLength=4)",
+        text: "# 概要\n",
+        expectedMessageIncludes: "概要",
+      },
+      {
+        name: "3 文字見出し『使い方』",
+        text: "## 使い方\n",
+        expectedMessageIncludes: "使い方",
+      },
+      {
+        name: "深い階層 (####) でも検出",
+        text: "#### まとめ\n",
+        expectedMessageIncludes: "まとめ",
+      },
+      {
+        name: "本文があっても見出しの長さのみで判定",
+        text: "# 概要\n\n本文は判定対象外で、見出しの 2 文字のみで警告される。\n",
+        expectedMessageIncludes: "概要",
+        expectedCount: 1,
+      },
+      {
+        name: "options.minLength=6 で『TIPS』 (4 文字) も検出",
+        text: "# TIPS\n",
+        expectedMessageIncludes: "TIPS",
+        optionsOverride: { minLength: 6 },
+      },
+      {
+        name: "options.vagueWords=['TIPS'] で『TIPS』 (default minLength=4 OK でも) を検出",
+        text: "# TIPS\n",
+        expectedMessageIncludes: "vagueWords",
+        optionsOverride: { vagueWords: ["TIPS"] },
+      },
+      {
+        name: "options.vagueWords で 4 文字以上の日本語曖昧語『メモ書き』を検出 (minLength では拾えない)",
+        text: "## メモ書き\n",
+        expectedMessageIncludes: "vagueWords",
+        optionsOverride: { vagueWords: ["メモ書き", "サンプル"] },
+      },
+      {
+        name: "vagueWords 完全一致のみ判定 (前後文字を含む見出しは見逃さない方針: 完全一致のみ)",
+        text: "# Tips for v1.1.0\n",
+        expectedMessageIncludes: "Tips",
+        optionsOverride: { vagueWords: ["Tips for v1.1.0"] },
+      },
+    ],
+    valid: [
+      {
+        name: "4 文字 (TIPS) は default minLength=4 + vagueWords=[] で OK",
+        text: "# TIPS\n",
+      },
+      {
+        name: "長い見出し『v1.1.0 リリース概要』は OK",
+        text: "## v1.1.0 リリース概要\n",
+      },
+      {
+        name: "本文のみ (見出しなし) は対象外",
+        text: "本文だけのテキスト。見出しが無いので警告されない。\n",
+      },
+      {
+        name: "InlineCode を含む見出しは合算文字数で判定 (`npm install` の手順 = 13 文字)",
+        text: "## `npm install` の手順\n",
+      },
+      {
+        name: "vagueWords default = [] のため案件外 (preset は machinery のみ提供)",
+        text: "## TIPS\n## Notes\n## Memo\n",
+      },
+      {
+        name: "vagueWords 部分一致は誤検出しない (完全一致のみ)",
+        text: "## TIPS for v1.1.0 リリース\n",
+        // optionsOverride で vagueWords=['TIPS'] を渡しても "TIPS for v1.1.0 リリース" 全体は一致しない
       },
     ],
   },

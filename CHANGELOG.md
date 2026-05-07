@@ -4,6 +4,48 @@
 
 このプロジェクトは [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) 形式を採用し、[Semantic Versioning](https://semver.org/lang/ja/) に従います。
 
+## [1.2.0] - 2026-05-07
+
+<!-- textlint-disable jtf-style/3.3.かっこ類と隣接する文字の間のスペースの有無 -->
+
+AI grep 最適化 Phase 2 のリリース。
+見出しの構造的関係を活用するルール `no-vague-heading` を追加。
+
+### Added
+
+- 独自ルール `no-vague-heading` を新規実装 ([rules/no-vague-heading.js](./rules/no-vague-heading.js))
+  - `minLength` option (default `4`): 文字数が閾値未満の見出しを警告
+    - 例: 「概要」「目的」「使い方」「まとめ」など
+  - `vagueWords` option (default `[]`): 完全一致で曖昧語の見出しを警告
+    - 利用者が自プロジェクト固有の曖昧語を define
+    - 推奨セット例: `['TIPS','Tips','TBD','FYI','WIP']`
+  - 短すぎる見出しが優先する仕様
+    - `minLength` 警告で early return し、`vagueWords` 警告は重複しない
+  - linter only。autofix は提供しない (「具体化」は機械的に不可能なため)
+  - InlineCode を含む見出しは合算文字数で判定
+    - 例: `` `npm install` の手順 `` → 13 文字なので OK
+- 独自ルール unit test を追加
+  - `tools/test-custom-rules.mjs` に sanity + invalid 8 + valid 6 ケース
+  - 合計 28 passed
+
+### Changed
+
+- README ルール一覧表のセクション名を整理
+  - 旧: 「AI grep 最適化 (Phase 1)」
+  - 新: 「AI grep 最適化」
+  - 理由: Phase 区分は CHANGELOG / RATIONALE で参照する形に統一
+
+### Notes
+
+- `vagueWords` default を空配列にした理由
+  - Keep a Changelog 規約の `### Notes` 等、一般的な見出し慣習との衝突回避
+  - breaking change リスク最小化
+- 利用者は `.textlintrc.json` で override 可能
+  - 例: `"no-vague-heading": { "minLength": 5, "vagueWords": ["TIPS","TBD"] }`
+
+<!-- textlint-enable jtf-style/3.3.かっこ類と隣接する文字の間のスペースの有無 -->
+
+
 ## [1.1.0] - 2026-05-07
 
 主要 LLM コーディングアシスタント (Claude Code / Cursor / Devin) は ripgrep ベースの Agentic search を採用している。この事実を踏まえ、AI grep の精度を最大化する日本語ガードを preset の core 責務として明示化したリリース。
