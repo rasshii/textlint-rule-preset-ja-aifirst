@@ -1,12 +1,15 @@
 {
   "name": "textlint-rule-preset-ja-aifirst",
   "version": "1.0.1",
-  "description": "textlint preset for AI-friendly Japanese writing: prh dictionary + JTF style + ja-hiragana rules.",
+  "description": "textlint preset for AI-friendly Japanese writing: AI grep optimization (prh + abbr + period + weak-phrase + identifier-backtick) + JTF style + ja-hiragana rules.",
   "main": "index.js",
   "files": [
     "index.js",
     "prh.yml",
+    "rules/",
+    "docs/",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "scripts": {
@@ -43,11 +46,16 @@
   "dependencies": {
     "@textlint/module-interop": "^14.2.0",
     "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-rule-abbr-within-parentheses": "^1.0.2",
     "textlint-rule-ja-hiragana-daimeishi": "^1.0.0",
     "textlint-rule-ja-hiragana-fukushi": "^1.3.0",
     "textlint-rule-ja-hiragana-hojodoushi": "^1.1.0",
     "textlint-rule-ja-keishikimeishi": "^1.0.5",
+    "textlint-rule-ja-no-abusage": "^3.0.0",
+    "textlint-rule-ja-no-mixed-period": "^3.0.2",
     "textlint-rule-ja-no-redundant-expression": "^4.0.1",
+    "textlint-rule-ja-no-successive-word": "^2.0.1",
+    "textlint-rule-ja-no-weak-phrase": "^2.0.0",
     "textlint-rule-max-kanji-continuous-len": "^1.1.1",
     "textlint-rule-max-ten": "^5.0.0",
     "textlint-rule-no-doubled-joshi": "^5.1.1",

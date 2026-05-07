@@ -2,6 +2,7 @@ const path = require("path");
 const { moduleInterop } = require("@textlint/module-interop");
 
 const jtfStyle = moduleInterop(require("textlint-rule-preset-jtf-style"));
+const noUnbacktickIdentifier = require("./rules/no-unbacktick-identifier");
 
 module.exports = {
   rules: {
@@ -20,6 +21,14 @@ module.exports = {
     "no-doubled-joshi": moduleInterop(require("textlint-rule-no-doubled-joshi")),
     "max-kanji-continuous-len": moduleInterop(require("textlint-rule-max-kanji-continuous-len")),
     "no-mixed-zenkaku-and-hankaku-alphabet": moduleInterop(require("textlint-rule-no-mixed-zenkaku-and-hankaku-alphabet")),
+    // AI grep 最適化 (Phase 1: npm 既成ルール)
+    "abbr-within-parentheses": moduleInterop(require("textlint-rule-abbr-within-parentheses")),
+    "ja-no-mixed-period": moduleInterop(require("textlint-rule-ja-no-mixed-period")),
+    "ja-no-successive-word": moduleInterop(require("textlint-rule-ja-no-successive-word")),
+    "ja-no-weak-phrase": moduleInterop(require("textlint-rule-ja-no-weak-phrase")),
+    "ja-no-abusage": moduleInterop(require("textlint-rule-ja-no-abusage")),
+    // AI grep 最適化 (Phase 1: 独自ルール)
+    "no-unbacktick-identifier": noUnbacktickIdentifier,
   },
   rulesConfig: {
     ...jtfStyle.rulesConfig,
@@ -59,6 +68,19 @@ module.exports = {
       max: 6,
     },
     "no-mixed-zenkaku-and-hankaku-alphabet": true,
+    // AI grep 最適化 (Phase 1)
+    "abbr-within-parentheses": true,
+    "ja-no-mixed-period": {
+      periodMark: "。",
+      allowEmojiAtEnd: false,
+      forceAppendPeriod: false,
+    },
+    "ja-no-successive-word": {
+      allowOnomatopee: true,
+    },
+    "ja-no-weak-phrase": true,
+    "ja-no-abusage": true,
+    "no-unbacktick-identifier": true,
   },
   filters: {
     comments: moduleInterop(require("textlint-filter-rule-comments")),

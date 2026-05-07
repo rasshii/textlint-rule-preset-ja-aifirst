@@ -35,7 +35,18 @@
         "max-kanji-continuous-len": {
             "max": 6
         },
-        "no-mixed-zenkaku-and-hankaku-alphabet": true
+        "no-mixed-zenkaku-and-hankaku-alphabet": true,
+        "abbr-within-parentheses": true,
+        "ja-no-mixed-period": {
+            "periodMark": "。",
+            "allowEmojiAtEnd": false,
+            "forceAppendPeriod": false
+        },
+        "ja-no-successive-word": {
+            "allowOnomatopee": true
+        },
+        "ja-no-weak-phrase": true,
+        "ja-no-abusage": true
     },
     "filters": {
         "comments": true
