@@ -1,5 +1,10 @@
 # textlint-rule-preset-ja-aifirst
 
+[![npm version](https://img.shields.io/npm/v/textlint-rule-preset-ja-aifirst.svg)](https://www.npmjs.com/package/textlint-rule-preset-ja-aifirst)
+[![Test](https://github.com/rasshii/textlint-rule-preset-ja-aifirst/actions/workflows/test.yml/badge.svg)](https://github.com/rasshii/textlint-rule-preset-ja-aifirst/actions/workflows/test.yml)
+[![License: ISC](https://img.shields.io/npm/l/textlint-rule-preset-ja-aifirst.svg)](./LICENSE)
+[![Node.js](https://img.shields.io/node/v/textlint-rule-preset-ja-aifirst.svg)](./package.json)
+
 [textlint](https://github.com/textlint/textlint) preset for AI-friendly Japanese writing.
 
 AI 時代の高品質な日本語文書を書くための textlint preset。
@@ -42,6 +47,31 @@ AI 時代の高品質な日本語文書を書くための textlint preset。
 | 構造的関係を活用 | 見出し階層の意味化 | `no-vague-heading` (独自、v1.2.0~) |
 
 **詳細な根拠・全出典・各ルールと根拠の対応関係**: [docs/RATIONALE.md](./docs/RATIONALE.md) を参照してください。
+
+## 30 秒で始める
+
+```bash
+npm install --save-dev textlint textlint-rule-preset-ja-aifirst
+```
+
+`.textlintrc.json` を作成:
+
+```json
+{
+  "rules": {
+    "preset-ja-aifirst": true
+  }
+}
+```
+
+実行:
+
+```bash
+npx textlint path/to/your-document.md
+```
+
+これだけで AI grep 最適化された日本語ガード (内蔵 80 prh ルール + Phase 1 5 ルール + Phase 2 独自ルール) が有効化されます。
+追加カスタマイズは [`.textlintrc.json` の override 例](#カスタマイズ) を参照。
 
 ## 他の preset との違い
 
